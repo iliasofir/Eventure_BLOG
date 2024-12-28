@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVENTURE Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-blue-600">EVENTURE</a>
+      <ul class="flex space-x-6">
+        <li><a href="#" class="hover:text-blue-600">Home</a></li>
+        <li><a href="#" class="hover:text-blue-600">About</a></li>
+        <li><a href="#" class="hover:text-blue-600">Events</a></li>
+        <li><a href="#" class="hover:text-blue-600">Contact</a></li>
+        <li><a href="/login" class="hover:text-blue-600">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="bg-blue-600 text-white">
+    <div class="container mx-auto px-4 py-20 text-center">
+      <h1 class="text-4xl font-bold mb-4">Welcome to EVENTURE</h1>
+      <p class="text-lg mb-6">Your go-to blog for the latest event updates and inspiration!</p>
+      <a href="#posts" class="bg-white text-blue-600 px-6 py-3 rounded shadow hover:bg-blue-100">Discover More</a>
+    </div>
+  </header>
+
+  <!-- Blog Posts Section -->
+  <main class="container mx-auto px-4 py-10" id="posts">
+    <h2 class="text-3xl font-bold text-center mb-10">Latest Posts</h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Blog Post Card -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <img src="https://via.placeholder.com/300" alt="Post Image" class="w-full h-40 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Top Event Trends for 2024</h3>
+          <p class="text-gray-600 mb-4">Discover the emerging trends shaping the event industry this year.</p>
+          <a href="#" class="text-blue-600 hover:underline">Read More</a>
+        </div>
+      </div>
+
+      <!-- Blog Post Card -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <img src="https://via.placeholder.com/300" alt="Post Image" class="w-full h-40 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">10 Tips for Hosting Memorable Events</h3>
+          <p class="text-gray-600 mb-4">Learn how to make your events unforgettable with these tips.</p>
+          <a href="#" class="text-blue-600 hover:underline">Read More</a>
+        </div>
+      </div>
+
+      <!-- Blog Post Card -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <img src="https://via.placeholder.com/300" alt="Post Image" class="w-full h-40 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">How to Promote Your Event Effectively</h3>
+          <p class="text-gray-600 mb-4">Get the word out and maximize attendance with these strategies.</p>
+          <a href="#" class="text-blue-600 hover:underline">Read More</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 EVENTURE. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
