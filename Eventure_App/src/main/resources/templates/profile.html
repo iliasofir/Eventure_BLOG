@@ -13,7 +13,7 @@
         <div class="relative flex items-center">
           <button id="dropdownButton" class="focus:outline-none">
             <img
-              src="/path/to/image.png"
+              th:src="@{${user.image}}"
               alt="Menu"
               class="w-8 h-8 rounded-full"
             />
@@ -22,11 +22,28 @@
             id="dropdownMenu"
             class="hidden absolute right-0 top-3 mt-10 w-64 bg-white border rounded shadow-lg p-4"
           >
-            <img
-              src="/path/to/image.png"
-              alt="Profile"
-              class="w-16 h-16 rounded-full mx-auto"
-            />
+            <form
+              id="imageUploadForm"
+              action="/upload"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <input type="hidden" name="_csrf" />
+              <label for="fileInput">
+                <img
+                  th:src="@{${user.image}}"
+                  alt="Profile"
+                  class="w-16 h-16 rounded-full mx-auto cursor-pointer"
+                />
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                name="profileImage"
+                class="hidden"
+                onchange="document.getElementById('imageUploadForm').submit();"
+              />
+            </form>
             <h3
               class="text-center text-xl font-bold mt-2"
               th:text="${user.name}"
@@ -35,27 +52,9 @@
             <div class="mt-3 w-full border-t border-gray-200 pt-3">
               <p
                 class="py-2 cursor-pointer hover:bg-gray-100"
-                onclick="window.location.href='/profile'"
-              >
-                Mon Profil
-              </p>
-              <p
-                class="py-2 cursor-pointer hover:bg-gray-100"
-                onclick="window.location.href='/events'"
-              >
-                Mes Événements
-              </p>
-              <p
-                class="py-2 cursor-pointer hover:bg-gray-100"
                 onclick="window.location.href='/logout'"
               >
                 Logout
-              </p>
-              <p
-                class="py-2 cursor-pointer hover:bg-gray-100"
-                onclick="window.location.href='/settings'"
-              >
-                Settings
               </p>
             </div>
           </div>
@@ -65,7 +64,10 @@
 
     <div class="container mx-auto mt-12 text-center">
       <h1 class="text-4xl font-bold">
-        Welcome, <span th:text="${user.name}"></span>!
+        Welcome, <span th:text="${user.name}"></span>! avec Role<span
+          th:text="${user.role}"
+        ></span
+        >!
       </h1>
       <p class="text-lg text-gray-600 mt-4">You are now logged in.</p>
     </div>

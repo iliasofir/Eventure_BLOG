@@ -15,47 +15,57 @@
 
     <div class="container mx-auto mt-10">
       <h1 class="text-3xl font-bold text-blue-700 mb-5">Users List</h1>
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto shadow-md sm:rounded-lg">
         <table class="min-w-full bg-white border border-blue-200">
-          <thead>
+          <thead class="bg-blue-100">
             <tr>
-              <th
-                class="py-2 px-4 border-b border-blue-200 bg-blue-100 text-left"
-              >
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
+                Photo
+              </th>
+
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
                 Name
               </th>
-              <th
-                class="py-2 px-4 border-b border-blue-200 bg-blue-100 text-left"
-              >
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
                 Email
               </th>
-              <th
-                class="py-2 px-4 border-b border-blue-200 bg-blue-100 text-left"
-              >
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
                 Edit
               </th>
-              <th
-                class="py-2 px-4 border-b border-blue-200 bg-blue-100 text-left"
-              >
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
                 Delete
+              </th>
+              <th class="py-2 px-4 border-b border-blue-200 text-center">
+                Organisator Profile
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr th:each="user : ${users}">
+            <tr
+              th:each="user : ${users}"
+              class="bg-white border-b hover:bg-gray-50"
+            >
+              <td class="py-2 px-4 border-b border-blue-200 text-center">
+                <img
+                  th:src="@{${user.image}}"
+                  alt="Profile Image"
+                  class="w-10 h-10 rounded-full mx-auto"
+                />
+              </td>
+
               <td
-                class="py-2 px-4 border-b border-blue-200"
+                class="py-2 px-4 border-b border-blue-200 text-center"
                 th:text="${user.name}"
               ></td>
               <td
-                class="py-2 px-4 border-b border-blue-200"
+                class="py-2 px-4 border-b border-blue-200 text-center"
                 th:text="${user.email}"
               ></td>
-              <td class="py-2 px-4 border-b border-blue-200">
+              <td class="py-2 px-4 border-b border-blue-200 text-center">
+                <!-- Edit Action -->
                 <a
-                  href="#"
-                  th:href="@{/edit/{id}(id=${user.id})}"
                   class="text-blue-600 hover:text-blue-900"
+                  th:attr="onclick=|showEditForm('${user.id}', '${user.name}', '${user.email}')|"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,32 +77,138 @@
                       d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828zM4 12v4h4v-1H5v-3H4z"
                     />
                   </svg>
+                  Edit
                 </a>
               </td>
-              <td class="py-2 px-4 border-b border-blue-200">
-                <a
-                  href="#"
-                  th:href="@{/delete/{id}(id=${user.id})}"
-                  class="text-red-600 hover:text-red-900"
+              <td class="py-2 px-4 border-b border-blue-200 text-center">
+                <!-- Delete Action -->
+                <form
+                  th:action="@{/users/delete/{id}(id=${user.id})}"
+                  method="post"
+                  class="inline-block"
+                  onsubmit="return confirm('Are you sure you want to delete this user?');"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 inline"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                  <input type="hidden" name="id" th:value="${user.id}" />
+                  <button
+                    type="submit"
+                    class="text-red-600 hover:text-red-900 ml-4 border-none bg-transparent cursor-pointer"
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 4a1 1 0 011 1v7a1 1 0 11-2 0V7a1 1 0 011-1zm4 0a1 1 0 011 1v7a1 1 0 11-2 0V7a1 1 0 011-1z"
-                      clip-rule="evenodd"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 inline"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 4a1 1 0 011 1v7a1 1 0 11-2 0V7a1 1 0 011-1zm4 0a1 1 0 011 1v7a1 1 0 11-2 0V7a1 1 0 011-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Delete
+                  </button>
+                </form>
+              </td>
+              <td class="py-2 px-4 border-b border-blue-200 text-center">
+                <!-- Toggle Button -->
+                <form
+                  th:action="@{/users/toggleRole}"
+                  method="post"
+                  class="inline-block"
+                >
+                  <!-- Champ caché pour l'ID de l'utilisateur -->
+                  <input type="hidden" name="id" th:value="${user.id}" />
+
+                  <!-- Champ caché pour basculer le rôle (1 ou 2) -->
+                  <input
+                    type="hidden"
+                    name="role"
+                    th:value="${user.role == 2 ? 1 : 2}"
+                  />
+
+                  <!-- Bouton interrupteur -->
+                  <label class="inline-flex items-center cursor-pointer">
+                    <!-- Input checkbox (affichage visuel uniquement) -->
+                    <input
+                      type="checkbox"
+                      class="sr-only peer"
+                      th:checked="${user.role == 2}"
+                      onchange="this.form.submit()"
                     />
-                  </svg>
-                </a>
+                    <!-- Conteneur du bouton avec styles -->
+                    <div
+                      class="relative w-11 h-6 bg-gray-300 rounded-full transition duration-300 ease-in-out peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-600 peer-checked:bg-blue-500 peer-checked:shadow-lg"
+                    >
+                      <!-- Cercle interne du bouton -->
+                      <span
+                        class="absolute top-0.5 left-[2px] w-5 h-5 bg-white border border-gray-300 rounded-full transition-transform duration-300 ease-in-out peer-checked:translate-x-full peer-checked:border-blue-500"
+                      ></span>
+                    </div>
+                  </label>
+                </form>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- Edit User Modal -->
+    <div
+      id="editUserForm"
+      class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center"
+    >
+      <div class="bg-white p-6 border rounded-lg shadow-lg w-1/3">
+        <form id="editForm" method="post" th:action="@{/users/update/__id__}">
+          <input type="hidden" id="editUserId" name="id" />
+          <div class="mb-4">
+            <label for="editName" class="block text-gray-700">Name</label>
+            <input
+              type="text"
+              id="editName"
+              name="name"
+              class="w-full border rounded p-2"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="editEmail" class="block text-gray-700">Email</label>
+            <input
+              type="email"
+              id="editEmail"
+              name="email"
+              class="w-full border rounded p-2"
+              required
+            />
+          </div>
+          <div class="flex justify-end">
+            <button
+              type="button"
+              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 mr-2"
+              onclick="document.getElementById('editUserForm').classList.add('hidden')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function showEditForm(id, name, email) {
+        document.getElementById("editUserForm").classList.remove("hidden");
+        document.getElementById("editUserId").value = id;
+        document.getElementById("editName").value = name;
+        document.getElementById("editEmail").value = email;
+        document.getElementById("editForm").action = "/users/update/" + id;
+      }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </body>
 </html>

@@ -26,6 +26,6 @@ public class JoinEvent {
     private Event event;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "participant_id")
     private User participant;
 }

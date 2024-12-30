@@ -30,17 +30,17 @@ public class CategorieController {
 
     // Handle delete via POST (for HTML forms)
     @PostMapping("/categories/delete/{id}")
-    public String deleteCategorieViaPost(@RequestParam("id") Long id) {
+    public String deleteCategorieViaPost(@PathVariable Long id) {
         service.deleteCategorieById(id);
         return "redirect:/categories";
     }
 
     // Handle update via POST (for HTML forms)
     @PostMapping("/categories/update/{id}")
-    public String updateCategorieViaPost(@RequestParam("id") Long id, @RequestParam("title") String title) {
+    public String updateCategorieViaPost(@PathVariable Long id, @RequestParam String title) {
         Categorie category = service.findCategorieById(id);
         category.setTitle(title);
-        service.addCategorie(category);
+        service.update(category);
         return "redirect:/categories";
     }
 

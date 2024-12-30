@@ -2,6 +2,7 @@ package com.fst.info.Eventure_App.models;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +33,9 @@ public class User {
     @OneToMany(mappedBy = "creator")
     private List<Event> createdEvents;
 
-    @OneToMany(mappedBy = "participant")
+    @OneToMany(mappedBy = "participant" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JoinEvent> participants;
+
+
 
 }

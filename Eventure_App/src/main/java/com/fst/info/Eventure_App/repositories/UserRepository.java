@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.fst.info.Eventure_App.models.*;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     
 
     Optional<User> findByEmail(@Param("email") String email);
-
+    Optional<User> findById(@Param("id") Long id);
 
 }

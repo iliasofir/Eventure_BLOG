@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.CurrentTimestamp;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +32,7 @@ public class Event {
     private String title; // Titre de l'événement
     private String description; // Description de l'événement
     private Date dateEvent; // Date de l'événement
+    @CreationTimestamp
     private Date dateCreate; // Date de création
     private String image; // URL ou chemin de l'image
 
@@ -36,7 +41,7 @@ public class Event {
     private Categorie categorie;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "creator_id")
     private User creator;
 
     @OneToMany(mappedBy = "event")
@@ -45,6 +50,7 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Interaction> interactions;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JoinEvent> participants;
+
 }

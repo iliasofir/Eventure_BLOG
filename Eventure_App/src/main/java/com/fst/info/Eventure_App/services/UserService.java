@@ -40,7 +40,11 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        repo.deleteById(id.intValue());
+        repo.deleteById(id);
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return repo.findById(id);
     }
 
 }
